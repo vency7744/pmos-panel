@@ -1,0 +1,26 @@
+[Unit]
+Description=PMOS Control Panel
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pmos-panel
+Group=pmos-panel
+ExecStart=/usr/local/bin/pmos-panel
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=10
+
+Environment=PMOS_PANEL_PORT=8080
+Environment=PMOS_PANEL_LOG_LEVEL=info
+Environment=PMOS_PANEL_LOG_FORMAT=json
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/home/pmos-panel
+PrivateTmp=true
+ProtectHome=false
+
+[Install]
+WantedBy=multi-user.target

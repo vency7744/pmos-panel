@@ -1,0 +1,58 @@
+:root {
+  --text: #6b7280;
+  --text-h: #111827;
+  --bg: #f9fafb;
+  --sidebar: #ffffff;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --hover: #f3f4f6;
+  --input-bg: #ffffff;
+  --accent: #2563eb;
+  --accent-bg: rgba(37, 99, 235, 0.08);
+  --green: #16a34a;
+  --green-bg: rgba(22, 163, 74, 0.08);
+  --green-border: rgba(22, 163, 74, 0.2);
+  --error: #dc2626;
+  --error-bg: rgba(220, 38, 38, 0.08);
+  --mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #0f1117;
+    --sidebar: #161822;
+    --card: #1a1d2e;
+    --border: #2a2d3e;
+    --hover: #1e2030;
+    --input-bg: #1a1d2e;
+    --accent: #3b82f6;
+    --accent-bg: rgba(59, 130, 246, 0.12);
+    --green: #22c55e;
+    --green-bg: rgba(34, 197, 94, 0.1);
+    --green-border: rgba(34, 197, 94, 0.2);
+    --error: #ef4444;
+    --error-bg: rgba(239, 68, 68, 0.1);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  min-height: 100vh;
+}

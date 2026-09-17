@@ -1,0 +1,28 @@
+# Binaries
+pmos-panel
+pmos-panel-linux-arm64
+pmos-panel.exe
+*.exe
+
+# Logs
+*.log
+
+# Node
+web/node_modules/
+web/.svelte-kit/
+
+# Build
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+ssh_cmd.ps1
+*.pem
+*.key
