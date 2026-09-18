@@ -44,19 +44,18 @@ Read `PLAN.md` before making architectural or implementation decisions.
 ### Deployment (2026-09-18)
 - Device: postmarketOS v26.06 on qcom msm8953
 - Init: **OpenRC** (not systemd)
-- Binary: `/tmp/pmos-panel`
+- Binary: `/usr/local/bin/pmos-panel`
 - Config: `/home/fw/config.json`
 - Service: `/etc/init.d/pmos-panel` (OpenRC)
 - Firewall: nftables `inet filter input tcp dport 8080`
 - Build: Cross-compiled from Windows laptop (GOOS=linux GOARCH=arm64)
 - No Go/Node.js needed on device (embedded frontend)
+- Auto-start on boot: `rc-update add pmos-panel default`
 
 ### Known Issues / Future Work
 - Phase 11: Security audit (CSRF tokens, CSP headers, rate limiting on all endpoints)
 - Phase 12: Performance optimization and benchmarking
 - Settings page is a placeholder
-- Service file in `/tmp/` — needs persistence for reboot
-- Power manager uses `systemctl` commands — needs OpenRC adaptation (reboot/poweroff via `reboot`/`poweroff` commands)
 
 ---
 
