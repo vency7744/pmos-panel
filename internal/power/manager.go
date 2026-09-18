@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 	"os/exec"
+	"os/user"
 )
 
 type Manager struct {
@@ -14,14 +15,28 @@ func New(logger *slog.Logger) *Manager {
 	return &Manager{logger: logger}
 }
 
+func isRoot() bool {
+	u, err := user.Current()
+	if err != nil {
+		return false
+	}
+	return u.Uid == "0"
+}
+
 func (m *Manager) Reboot() error {
 	m.logger.Warn("system reboot requested")
-	return exec.Command("systemctl", "reboot").Run()
+	if isRoot() {
+		return exec.Command("reboot").Run()
+	}
+	return exec.Command("sudo", "reboot").Run()
 }
 
 func (m *Manager) Shutdown() error {
 	m.logger.Warn("system shutdown requested")
-	return exec.Command("systemctl", "poweroff").Run()
+	if isRoot() {
+		return exec.Command("poweroff").Run()
+	}
+	return exec.Command("sudo", "poweroff").Run()
 }
 
 func (m *Manager) RebootScheduled(delay string) error {
