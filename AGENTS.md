@@ -12,7 +12,7 @@ Read `PLAN.md` before making architectural or implementation decisions.
 
 ---
 
-## Current Status (2026-09-17)
+## Current Status (2026-09-18)
 
 **Phase 1-10: DONE** — All core features implemented and deployed on real hardware.
 
@@ -41,11 +41,22 @@ Read `PLAN.md` before making architectural or implementation decisions.
 - Live log streaming via WebSocket added
 - Mobile hamburger menu added
 
+### Deployment (2026-09-18)
+- Device: postmarketOS v26.06 on qcom msm8953
+- Init: **OpenRC** (not systemd)
+- Binary: `/tmp/pmos-panel`
+- Config: `/home/fw/config.json`
+- Service: `/etc/init.d/pmos-panel` (OpenRC)
+- Firewall: nftables `inet filter input tcp dport 8080`
+- Build: Cross-compiled from Windows laptop (GOOS=linux GOARCH=arm64)
+- No Go/Node.js needed on device (embedded frontend)
+
 ### Known Issues / Future Work
 - Phase 11: Security audit (CSRF tokens, CSP headers, rate limiting on all endpoints)
 - Phase 12: Performance optimization and benchmarking
 - Settings page is a placeholder
-- Systemd service file path differs from PLAN.md (user service vs system service)
+- Service file in `/tmp/` — needs persistence for reboot
+- Power manager uses `systemctl` commands — needs OpenRC adaptation (reboot/poweroff via `reboot`/`poweroff` commands)
 
 ---
 

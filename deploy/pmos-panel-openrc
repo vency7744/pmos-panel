@@ -1,0 +1,20 @@
+#!/sbin/openrc-run
+
+name="pmos-panel"
+description="PMOS Control Panel"
+
+command="/tmp/pmos-panel"
+command_args="/home/fw/config.json"
+command_background=true
+pidfile="/run/pmos-panel.pid"
+output_log="/var/log/pmos-panel.log"
+error_log="/var/log/pmos-panel.log"
+
+depend() {
+    need net
+    after firewall
+}
+
+start_pre() {
+    nft add rule inet filter input tcp dport 8080 accept 2>/dev/null || true
+}
