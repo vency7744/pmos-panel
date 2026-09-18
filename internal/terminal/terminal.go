@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"strings"
 	"sync"
 
 	"github.com/creack/pty"
@@ -58,18 +59,27 @@ func (t *Terminal) HandleWS(w http.ResponseWriter, r *http.Request) {
 		shell = "/bin/sh"
 	}
 
-	home := os.Getenv("HOME")
-	if home == "" {
-		home = "/home/fw"
-	}
-
-	env := os.Environ()
-	env = append(env, "TERM=xterm-256color", "HOME="+home, "USER="+os.Getenv("USER"))
-	if os.Getenv("USER") == "" {
-		env = append(env, "USER=fw")
-	}
+	home := "/home/fw"
+	user := "fw"
 
 	cmd := exec.Command(shell)
+	cmd.Dir = home
+
+	var env []string
+	for _, e := range os.Environ() {
+		k := e[:strings.IndexByte(e, '=')]
+		if k == "HOME" || k == "USER" || k == "SHELL" || k == "LOGNAME" {
+			continue
+		}
+		env = append(env, e)
+	}
+	env = append(env,
+		"TERM=xterm-256color",
+		"HOME="+home,
+		"USER="+user,
+		"LOGNAME="+user,
+		"SHELL="+shell,
+	)
 	cmd.Env = env
 
 	ptmx, err := pty.Start(cmd)
