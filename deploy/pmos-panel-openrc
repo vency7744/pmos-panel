@@ -3,7 +3,7 @@
 name="pmos-panel"
 description="PMOS Control Panel"
 
-command="/tmp/pmos-panel"
+command="/usr/local/bin/pmos-panel"
 command_args="/home/fw/config.json"
 command_background=true
 pidfile="/run/pmos-panel.pid"

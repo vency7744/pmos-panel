@@ -4,6 +4,7 @@
 set -e
 
 PANEL_BIN="${1:-/tmp/pmos-panel}"
+INSTALL_DIR="/usr/local/bin"
 CONFIG_FILE="/home/${USER:-fw}/config.json"
 FM_ROOT="/home/${USER:-fw}/pmos-panel"
 
@@ -14,6 +15,11 @@ if [ ! -f "$PANEL_BIN" ]; then
 fi
 
 echo "=== PMOS Panel Installer (OpenRC) ==="
+
+# 1. Copy binary to persistent location
+cp "$PANEL_BIN" "$INSTALL_DIR/pmos-panel"
+chmod +x "$INSTALL_DIR/pmos-panel"
+echo "[OK] Binary installed: $INSTALL_DIR/pmos-panel"
 
 # 1. Config
 if [ ! -f "$CONFIG_FILE" ]; then
@@ -40,7 +46,7 @@ cat > /etc/init.d/pmos-panel << 'INITEOF'
 name="pmos-panel"
 description="PMOS Control Panel"
 
-command="/tmp/pmos-panel"
+command="/usr/local/bin/pmos-panel"
 command_args="/home/fw/config.json"
 command_background=true
 pidfile="/run/pmos-panel.pid"
