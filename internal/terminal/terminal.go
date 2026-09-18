@@ -58,8 +58,19 @@ func (t *Terminal) HandleWS(w http.ResponseWriter, r *http.Request) {
 		shell = "/bin/sh"
 	}
 
+	home := os.Getenv("HOME")
+	if home == "" {
+		home = "/home/fw"
+	}
+
+	env := os.Environ()
+	env = append(env, "TERM=xterm-256color", "HOME="+home, "USER="+os.Getenv("USER"))
+	if os.Getenv("USER") == "" {
+		env = append(env, "USER=fw")
+	}
+
 	cmd := exec.Command(shell)
-	cmd.Env = append(os.Environ(), "TERM=xterm-256color")
+	cmd.Env = env
 
 	ptmx, err := pty.Start(cmd)
 	if err != nil {

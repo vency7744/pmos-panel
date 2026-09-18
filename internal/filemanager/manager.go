@@ -64,7 +64,7 @@ func (m *Manager) List(dirPath string) ([]FileEntry, error) {
 		return nil, fmt.Errorf("read dir: %w", err)
 	}
 
-	var files []FileEntry
+	files := make([]FileEntry, 0)
 	for _, entry := range entries {
 		info, err := entry.Info()
 		if err != nil {
